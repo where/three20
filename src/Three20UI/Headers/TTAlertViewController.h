@@ -1,5 +1,5 @@
 //
-// Copyright 2009-2010 Facebook
+// Copyright 2009-2011 Facebook
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,10 +27,12 @@
  */
 @interface TTAlertViewController : TTPopupViewController <UIAlertViewDelegate> {
 @protected
-  id              _userInfo;
-  NSMutableArray* _URLs;
-
-  id<TTAlertViewControllerDelegate> _delegate;
+    id              _userInfo;
+    NSMutableArray* _URLs;
+    NSMutableArray* _targets;
+    NSMutableArray* _selectors;
+    
+    id<TTAlertViewControllerDelegate> _delegate;
 }
 
 @property (nonatomic, readonly) UIAlertView*  alertView;
@@ -42,9 +44,16 @@
 - (id)initWithTitle:(NSString*)title message:(NSString*)message;
 - (id)initWithTitle:(NSString*)title message:(NSString*)message delegate:(id)delegate;
 
+- (NSInteger)addButtonWithTitle:(NSString*)title URL:(NSString*)URL target:(NSObject *)target selector:(SEL)selector;
 - (NSInteger)addButtonWithTitle:(NSString*)title URL:(NSString*)URL;
+- (NSInteger)addButtonWithTitle:(NSString*)title target:(NSObject *)target selector:(SEL)selector;
+
+- (NSInteger)addCancelButtonWithTitle:(NSString*)title URL:(NSString*)URL target:(NSObject *)target selector:(SEL)selector;
 - (NSInteger)addCancelButtonWithTitle:(NSString*)title URL:(NSString*)URL;
+- (NSInteger)addCancelButtonWithTitle:(NSString*)title target:(NSObject *)target selector:(SEL)selector;
 
 - (NSString*)buttonURLAtIndex:(NSInteger)index;
+- (NSObject*)targetAtIndex:(NSInteger)buttonIndex;
+- (NSString*)selectorAtIndex:(NSInteger)buttonIndex;
 
 @end
